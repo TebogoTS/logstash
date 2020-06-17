@@ -1,0 +1,34 @@
+---
+#
+# Installing Logstash
+#
+# Add Elasticsearch apt key
+
+- name: Add Elasticsearch apt key
+  apt_key:
+   url: "https://packages.elastic.co/GPG-KEY-elasticsearch"
+   state: present
+
+# Add the Elasticsearch apt repo. For versions 7 of the stack - use '7.x-prerelease':
+
+- name: Adding Elasticsearch repo
+  apt_repository:
+   repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+   state: present
+   filename: elastic-7.x.list
+   update_cache: yes
+
+# Install Logstash 
+
+- name: Install Logstash with apt
+  apt:
+   name: logstash
+   update_cache: yes
+ 
+   
+# Starting Kibana
+
+- name: Starting logstash
+  service:
+   name: logstash
+   state: started
